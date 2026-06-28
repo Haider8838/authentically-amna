@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Authentically Amna — Honest Thoughts, Simple Words</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+:root {
+  --ink: #0D0F1A;
+  --parchment: #F7F0E6;
+  --mauve: #C4788A;
+  --gold: #D4A853;
+  --cream: #EDE4D6;
+  --ink-light: #1E2235;
+  --mauve-light: #F0D8DF;
+}
+body {
+  font-family: 'Lora', serif;
+  background: var(--parchment);
+  color: var(--ink);
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(247,240,230,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(196,120,138,0.2);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--ink); text-decoration: none; white-space: nowrap;
+}
+.nav-logo span { color: var(--mauve); font-style: italic; }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none; position: relative;
+  transition: color 0.3s; white-space: nowrap;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px;
+  background: var(--mauve); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-links a:hover { color: var(--mauve); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+/* Hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 24px; height: 2px;
+  background: var(--ink); transition: all 0.3s ease;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none; position: fixed; top: 57px; left: 0; right: 0;
+  background: rgba(247,240,230,0.98); backdrop-filter: blur(16px);
+  z-index: 199; flex-direction: column; padding: 1.5rem 2rem 2rem;
+  border-bottom: 1px solid rgba(196,120,138,0.2);
+  gap: 1.2rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink); text-decoration: none;
+  padding: 0.5rem 0; border-bottom: 1px solid rgba(196,120,138,0.15);
+  transition: color 0.3s;
+}
+.mobile-menu a:hover { color: var(--mauve); }
+
+/* ── HERO ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left {
+  background: var(--ink);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8rem 3.5rem 4rem 5rem;
+  position: relative; overflow: hidden;
+}
+.hero-left::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(196,120,138,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ink-bleed { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.ink-drop {
+  position: absolute; border-radius: 50%;
+  background: rgba(212,168,83,0.05);
+  animation: inkSpread 8s ease-in-out infinite;
+}
+.ink-drop:nth-child(1) { width: 280px; height: 280px; top: 5%; left: -8%; animation-delay: 0s; }
+.ink-drop:nth-child(2) { width: 180px; height: 180px; top: 60%; left: 40%; animation-delay: 3s; }
+.ink-drop:nth-child(3) { width: 130px; height: 130px; top: 30%; left: 65%; animation-delay: 6s; }
+@keyframes inkSpread {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+.hero-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.2rem;
+  animation: fadeUp 1s ease 0.2s both;
+  position: relative; z-index: 1;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 4.5vw, 5rem);
+  font-weight: 900; line-height: 1.05;
+  color: var(--parchment);
+  animation: fadeUp 1s ease 0.4s both;
+  position: relative; z-index: 1;
+}
+.hero-title em {
+  display: block; font-style: italic;
+  color: var(--mauve); font-weight: 400;
+}
+.hero-tagline {
+  margin-top: 1.5rem;
+  font-family: 'Lora', serif; font-size: 1rem; line-height: 1.8;
+  color: rgba(247,240,230,0.6); max-width: 360px;
+  animation: fadeUp 1s ease 0.6s both;
+  position: relative; z-index: 1;
+}
+.hero-cta {
+  margin-top: 2.5rem;
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  animation: fadeUp 1s ease 0.8s both;
+  position: relative; z-index: 1;
+}
+.btn-primary {
+  display: inline-flex; align-items: center;
+  padding: 0.85rem 1.8rem;
+  background: var(--mauve); color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+  font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: all 0.3s ease;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-primary:hover { background: var(--gold); color: var(--ink); transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex; align-items: center;
+  padding: 0.85rem 1.8rem;
+  background: transparent; color: var(--parchment);
+  font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+  font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none; border: 1px solid rgba(247,240,230,0.3); cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-ghost:hover { border-color: var(--mauve); color: var(--mauve); }
+
+.hero-right {
+  background: var(--cream);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8rem 4rem 4rem 4rem;
+  position: relative; overflow: hidden;
+}
+.hero-right::before {
+  content: '\201C';
+  position: absolute; top: 4rem; left: 2.5rem;
+  font-family: 'Playfair Display', serif; font-size: 10rem;
+  color: var(--mauve-light); line-height: 1;
+  pointer-events: none;
+}
+.hero-quote { position: relative; z-index: 1; animation: fadeUp 1s ease 1s both; }
+.hero-quote blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  font-style: italic; font-weight: 400; line-height: 1.65;
+  color: var(--ink); max-width: 420px;
+}
+.hero-quote cite {
+  display: block; margin-top: 1.2rem;
+  font-family: 'DM Sans', sans-serif; font-size: 0.75rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mauve); font-style: normal;
+}
+.hero-stats {
+  margin-top: 2.5rem;
+  display: flex; gap: 2rem; flex-wrap: wrap;
+  animation: fadeUp 1s ease 1.2s both;
+  position: relative; z-index: 1;
+}
+.stat { text-align: left; }
+.stat-num {
+  display: block; font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700; color: var(--mauve); line-height: 1;
+}
+.stat-label {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink); opacity: 0.55; margin-top: 0.25rem;
+}
+
+/* diagonal divider between hero halves */
+.hero-divider {
+  position: absolute; top: 0; bottom: 0; left: calc(50% - 30px);
+  width: 60px; background: var(--parchment);
+  transform: skewX(-2deg); z-index: 10; pointer-events: none;
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--mauve); overflow: hidden;
+  padding: 0.85rem 0; position: relative; z-index: 20;
+  width: 100%;
+}
+.marquee-track {
+  display: flex; white-space: nowrap;
+  animation: marquee 28s linear infinite;
+}
+.marquee-item {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: white; padding: 0 1.8rem; flex-shrink: 0;
+}
+.marquee-dot { color: var(--gold); padding: 0 0.5rem; flex-shrink: 0; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── ABOUT ── */
+.about {
+  display: grid; grid-template-columns: 1fr 1.3fr;
+  max-width: 1300px; margin: 0 auto; padding: 7rem 4rem;
+  gap: 4rem; align-items: center;
+}
+.about-visual {
+  display: flex; justify-content: center; align-items: center;
+  position: relative;
+}
+.about-card {
+  background: var(--ink);
+  width: 280px; height: 380px;
+  position: relative; overflow: hidden;
+  box-shadow: 18px 18px 0 var(--mauve-light);
+  flex-shrink: 0;
+}
+.about-card::before {
+  content: 'A';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', serif;
+  font-size: 16rem; font-weight: 900;
+  color: rgba(196,120,138,0.12); line-height: 1;
+  pointer-events: none; user-select: none;
+}
+.about-card-content {
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 1.8rem;
+  background: linear-gradient(to top, var(--ink) 55%, transparent);
+}
+.about-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700; color: var(--parchment); font-style: italic;
+}
+.about-card-role {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); margin-top: 0.25rem;
+}
+.about-tag {
+  position: absolute; top: 1.5rem; right: 0;
+  background: var(--gold); color: var(--ink);
+  font-family: 'DM Sans', sans-serif; font-size: 0.65rem;
+  font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.35rem 1rem;
+}
+.about-text {
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* shared section atoms */
+.section-eyebrow {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--mauve); margin-bottom: 0.9rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.section-eyebrow::before {
+  content: ''; width: 28px; height: 1px; background: var(--mauve); flex-shrink: 0;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 1.2rem;
+}
+.section-title em { font-style: italic; color: var(--mauve); }
+
+.about-bio {
+  font-size: 0.97rem; line-height: 1.9; color: rgba(13,15,26,0.72);
+  margin-bottom: 1.2rem;
+}
+.about-topics { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.8rem; }
+.topic-tag {
+  font-family: 'DM Sans', sans-serif; font-size: 0.72rem;
+  font-weight: 500; letter-spacing: 0.04em;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--mauve); color: var(--mauve);
+  transition: all 0.2s; cursor: default;
+}
+.topic-tag:hover { background: var(--mauve); color: white; }
+.social-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
+  color: var(--ink); text-decoration: none;
+  border-bottom: 1px solid var(--mauve); padding-bottom: 0.15rem;
+  transition: color 0.3s;
+}
+.social-link:hover { color: var(--mauve); }
+.insta-icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+
+/* ── BLOGS ── */
+.blogs-section {
+  background: var(--ink); padding: 7rem 4rem;
+  position: relative; overflow: hidden; width: 100%;
+}
+.blogs-section::before {
+  content: 'BLOGS'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', serif; font-size: 18rem; font-weight: 900;
+  color: rgba(247,240,230,0.02); white-space: nowrap; pointer-events: none;
+}
+.blogs-inner { max-width: 1200px; margin: 0 auto; position: relative; }
+.blogs-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 3.5rem; gap: 1rem; flex-wrap: wrap;
+}
+.blogs-header .section-title { color: var(--parchment); margin-bottom: 0; }
+.blogs-header .section-eyebrow { color: var(--gold); }
+.blogs-header .section-eyebrow::before { background: var(--gold); }
+.view-all {
+  font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--mauve); text-decoration: none;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: gap 0.3s; white-space: nowrap;
+}
+.view-all:hover { gap: 0.9rem; }
+
+.blogs-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px; background: rgba(196,120,138,0.12);
+}
+.blog-card {
+  background: var(--ink-light); padding: 2.2rem;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: background 0.4s ease;
+}
+.blog-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(196,120,138,0.06) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.blog-card:hover { background: #161929; }
+.blog-card:hover::before { opacity: 1; }
+.blog-card.featured {
+  grid-column: 1; grid-row: 1 / 3;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 480px;
+  background: linear-gradient(to top, var(--ink) 35%, rgba(196,120,138,0.1) 100%);
+}
+.blog-card.small { grid-column: 2; }
+.blog-card.small:first-of-type { grid-row: 1; }
+.blog-card.small:last-of-type { grid-row: 2; }
+
+.blog-meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+.blog-cat {
+  font-family: 'DM Sans', sans-serif; font-size: 0.62rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(212,168,83,0.3); padding: 0.18rem 0.55rem;
+}
+.blog-date {
+  font-family: 'DM Sans', sans-serif; font-size: 0.68rem;
+  color: rgba(247,240,230,0.35); letter-spacing: 0.04em;
+}
+.blog-num {
+  margin-left: auto; font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 900; color: rgba(196,120,138,0.1); line-height: 1;
+}
+.blog-card.featured .blog-num { font-size: 5rem; }
+.blog-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 700; line-height: 1.35;
+  color: var(--parchment); margin-bottom: 0.9rem; transition: color 0.3s;
+}
+.blog-card.featured .blog-title { font-size: 1.75rem; }
+.blog-card:hover .blog-title { color: var(--mauve); }
+.blog-excerpt {
+  font-size: 0.88rem; line-height: 1.7;
+  color: rgba(247,240,230,0.48); margin-bottom: 1.3rem;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.blog-card.featured .blog-excerpt { -webkit-line-clamp: 4; }
+.read-more {
+  font-family: 'DM Sans', sans-serif; font-size: 0.72rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mauve); display: inline-flex; align-items: center; gap: 0.4rem;
+  text-decoration: none; cursor: pointer; background: none; border: none;
+  transition: gap 0.3s;
+}
+.read-more:hover { gap: 0.9rem; }
+
+/* ── PRIVACY ── */
+.privacy-section { background: var(--cream); padding: 7rem 4rem; }
+.privacy-inner { max-width: 860px; margin: 0 auto; }
+.privacy-inner .section-title { margin-bottom: 2.5rem; }
+.privacy-block { margin-bottom: 2.2rem; }
+.privacy-block h3 {
+  font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.7rem;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.privacy-block h3::before {
+  content: ''; width: 7px; height: 7px; background: var(--mauve);
+  border-radius: 50%; flex-shrink: 0;
+}
+.privacy-block p, .privacy-block li {
+  font-size: 0.93rem; line-height: 1.85; color: rgba(13,15,26,0.68);
+}
+.privacy-block ul { padding-left: 1.4rem; }
+.privacy-block li { margin-bottom: 0.35rem; }
+
+/* ── CONTACT ── */
+.contact-section {
+  background: var(--ink); padding: 7rem 2rem; text-align: center;
+}
+.contact-inner { max-width: 560px; margin: 0 auto; }
+.contact-section .section-title { color: var(--parchment); }
+.contact-section .section-eyebrow { color: var(--gold); justify-content: center; }
+.contact-section .section-eyebrow::before { display: none; }
+.contact-desc {
+  font-size: 0.97rem; line-height: 1.8;
+  color: rgba(247,240,230,0.5); margin: 1.3rem 0 2.2rem;
+}
+.instagram-link {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  padding: 0.95rem 2.2rem;
+  border: 1px solid rgba(196,120,138,0.4); color: var(--parchment);
+  font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500;
+  text-decoration: none; transition: all 0.3s ease;
+}
+.instagram-link:hover { background: var(--mauve); border-color: var(--mauve); transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background: #07080F; padding: 1.8rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.8rem;
+}
+.footer-logo { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: rgba(247,240,230,0.45); }
+.footer-logo span { color: var(--mauve); font-style: italic; }
+.footer-copy { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; color: rgba(247,240,230,0.28); }
+
+/* ── PAGE DOTS ── */
+.page-tabs {
+  position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 0.7rem;
+}
+.page-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(196,120,138,0.3); cursor: pointer;
+  transition: all 0.3s; border: none; padding: 0;
+}
+.page-dot.active, .page-dot:hover { background: var(--mauve); transform: scale(1.4); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; transform: translateY(35px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(13,15,26,0.9); z-index: 500;
+  backdrop-filter: blur(8px); overflow-y: auto;
+}
+.modal-overlay.open { display: block; }
+.modal-content {
+  max-width: 740px; margin: 4rem auto 4rem;
+  background: var(--parchment); padding: 3.5rem; position: relative;
+}
+.modal-close {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  width: 34px; height: 34px; background: none;
+  border: 1px solid rgba(13,15,26,0.2); cursor: pointer; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+}
+.modal-close:hover { background: var(--mauve); color: white; border-color: var(--mauve); }
+
+/* Post styles inside modal */
+.post-cat-date { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+.post-cat {
+  font-family: 'DM Sans', sans-serif; font-size: 0.68rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--mauve); border-bottom: 1px solid var(--mauve); padding-bottom: 0.12rem;
+}
+.post-date { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; color: rgba(13,15,26,0.42); }
+.post-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 900; line-height: 1.15;
+  color: var(--ink); margin-bottom: 1.3rem;
+}
+.post-lead {
+  font-family: 'Lora', serif; font-size: 1.1rem; font-style: italic; line-height: 1.7;
+  color: rgba(13,15,26,0.58); border-left: 3px solid var(--mauve);
+  padding-left: 1.3rem; margin-bottom: 2.5rem;
+}
+.post-body { font-size: 1rem; line-height: 1.95; color: rgba(13,15,26,0.78); }
+.post-body p { margin-bottom: 1.4rem; }
+.post-body h3 {
+  font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+  color: var(--ink); margin: 2.2rem 0 0.9rem;
+}
+.post-body strong { color: var(--ink); }
+.post-signature {
+  margin-top: 2.5rem; padding-top: 1.8rem;
+  border-top: 1px solid rgba(196,120,138,0.3);
+  font-family: 'Playfair Display', serif; font-size: 1.2rem;
+  font-style: italic; color: var(--mauve); text-align: right;
+}
+
+/* ════════════════════════════════
+   RESPONSIVE — TABLET ≤ 1024px
+════════════════════════════════ */
+@media (max-width: 1024px) {
+  nav { padding: 1rem 2rem; }
+  .hero-left { padding: 7rem 2.5rem 4rem 3rem; }
+  .hero-right { padding: 7rem 2.5rem 4rem 2.5rem; }
+  .about { padding: 6rem 3rem; gap: 3rem; }
+  .blogs-section { padding: 6rem 3rem; }
+  .privacy-section { padding: 6rem 3rem; }
+}
+
+/* ════════════════════════════════
+   RESPONSIVE — MOBILE ≤ 768px
+════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Nav */
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .page-tabs { display: none; }
+
+  /* Hero stacks vertically */
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    min-height: auto;
+  }
+  .hero-divider { display: none; }
+  .hero-left {
+    padding: 6.5rem 1.5rem 3rem;
+    min-height: 60vh;
+  }
+  .hero-title { font-size: clamp(2.4rem, 10vw, 3.5rem); }
+  .hero-tagline { font-size: 0.95rem; max-width: 100%; }
+  .hero-cta { gap: 0.8rem; }
+  .btn-primary, .btn-ghost { padding: 0.8rem 1.4rem; font-size: 0.75rem; }
+
+  .hero-right {
+    padding: 3rem 1.5rem 3.5rem;
+    min-height: auto;
+  }
+  .hero-right::before { font-size: 7rem; top: 1rem; left: 1rem; }
+  .hero-quote blockquote { font-size: 1.15rem; max-width: 100%; }
+  .hero-stats { gap: 1.5rem; }
+  .stat-num { font-size: 1.7rem; }
+
+  /* About stacks */
+  .about {
+    grid-template-columns: 1fr; padding: 4.5rem 1.5rem;
+    gap: 2.5rem;
+  }
+  .about-card { width: 100%; max-width: 280px; height: 340px; }
+  .about-card::before { font-size: 13rem; }
+
+  /* Blogs */
+  .blogs-section { padding: 4.5rem 1.5rem; }
+  .blogs-header { flex-direction: column; align-items: flex-start; margin-bottom: 2rem; }
+  .blogs-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 2px;
+  }
+  .blog-card.featured { grid-column: 1; grid-row: auto; min-height: 300px; }
+  .blog-card.small { grid-column: 1; grid-row: auto; }
+  .blog-card { padding: 1.6rem; }
+  .blog-card.featured .blog-title { font-size: 1.4rem; }
+  .blog-num { font-size: 2rem; }
+  .blog-card.featured .blog-num { font-size: 3.5rem; }
+
+  /* Privacy */
+  .privacy-section { padding: 4.5rem 1.5rem; }
+  .privacy-inner .section-title { margin-bottom: 2rem; }
+
+  /* Contact */
+  .contact-section { padding: 4.5rem 1.5rem; }
+  .instagram-link { font-size: 0.8rem; padding: 0.85rem 1.5rem; }
+
+  /* Footer */
+  footer { padding: 1.5rem; flex-direction: column; text-align: center; }
+
+  /* Modal */
+  .modal-content { margin: 1rem; padding: 2rem 1.3rem; }
+  .post-title { font-size: 1.7rem; }
+  .post-lead { font-size: 0.97rem; }
+  .post-body { font-size: 0.95rem; }
+}
+
+/* ════════════════════════════════
+   RESPONSIVE — SMALL ≤ 420px
+════════════════════════════════ */
+@media (max-width: 420px) {
+  .hero-left { padding: 6rem 1.2rem 2.5rem; }
+  .hero-right { padding: 2.5rem 1.2rem; }
+  .hero-title { font-size: 2.2rem; }
+  .blogs-section { padding: 4rem 1.2rem; }
+  .about { padding: 4rem 1.2rem; }
+  .privacy-section { padding: 4rem 1.2rem; }
+  .modal-content { margin: 0.5rem; padding: 1.5rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Authentically <span>Amna</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#blogs">Blogs</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#blogs" onclick="closeMobile()">Blogs</a>
+  <a href="#privacy" onclick="closeMobile()">Privacy</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- PAGE DOTS (desktop only) -->
+<div class="page-tabs">
+  <button class="page-dot active" onclick="goTo('#hero')" title="Hero"></button>
+  <button class="page-dot" onclick="goTo('#about')" title="About"></button>
+  <button class="page-dot" onclick="goTo('#blogs')" title="Blogs"></button>
+  <button class="page-dot" onclick="goTo('#privacy')" title="Privacy"></button>
+  <button class="page-dot" onclick="goTo('#contact')" title="Contact"></button>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <div class="ink-bleed">
+      <div class="ink-drop"></div>
+      <div class="ink-drop"></div>
+      <div class="ink-drop"></div>
+    </div>
+    <p class="hero-eyebrow">Est. 2025 · South Asian Voices</p>
+    <h1 class="hero-title">Authentically<br><em>Amna.</em></h1>
+    <p class="hero-tagline">I write blogs about real-life issues, culture, and changing perspectives. Honest thoughts, simple words.</p>
+    <div class="hero-cta">
+      <a href="#blogs" class="btn-primary">Read Blogs →</a>
+      <a href="#about" class="btn-ghost">Meet Amna</a>
+    </div>
+  </div>
+  <div class="hero-divider"></div>
+  <div class="hero-right">
+    <div class="hero-quote">
+      <blockquote>"Making a way out of the crowd doesn't mean you hate everyone in it — it simply means you were suffocated."</blockquote>
+      <cite>— Amna, The Cultural Bug</cite>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Posts Published</span></div>
+      <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Ideas Brewing</span></div>
+      <div class="stat"><span class="stat-num">1</span><span class="stat-label">Honest Voice</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Culture</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Society</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Identity</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Perspectives</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Honest Thoughts</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Simple Words</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Real Life</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Joint Families</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Women &amp; Society</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Traditions</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Change</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">South Asia</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Culture</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Society</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Identity</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Perspectives</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Honest Thoughts</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Simple Words</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Real Life</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Joint Families</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Women &amp; Society</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Traditions</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Change</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">South Asia</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual reveal">
+    <div class="about-card">
+      <div class="about-card-content">
+        <div class="about-card-name">Amna</div>
+        <div class="about-card-role">Writer · Cultural Observer</div>
+      </div>
+      <div class="about-tag">Since 2025</div>
+    </div>
+  </div>
+  <div class="about-text reveal">
+    <p class="section-eyebrow">Who Is Amna?</p>
+    <h2 class="section-title">The voice behind<br><em>this space</em></h2>
+    <p class="about-bio">Hi! I'm Amna — a writer who explores culture, society, and everyday life. I dive into how traditions, personal experiences, and social changes shape who we are and how we think.</p>
+    <p class="about-bio">From joint family dynamics to the evolving roles of women in society, I share insights, reflections, and stories that matter. This is a space for honest thoughts, simple words, and meaningful conversations.</p>
+    <p class="about-bio">Welcome to my corner of the internet — where I do blogs.</p>
+    <div class="about-topics">
+      <span class="topic-tag">Culture</span>
+      <span class="topic-tag">Society</span>
+      <span class="topic-tag">Identity</span>
+      <span class="topic-tag">Women's Issues</span>
+      <span class="topic-tag">Traditions</span>
+      <span class="topic-tag">South Asia</span>
+      <span class="topic-tag">Family Dynamics</span>
+    </div>
+    <a href="https://instagram.com/authentically_amna" target="_blank" class="social-link">
+      <svg class="insta-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @authentically_amna
+    </a>
+  </div>
+</section>
+
+<!-- BLOGS -->
+<section class="blogs-section" id="blogs">
+  <div class="blogs-inner">
+    <div class="blogs-header reveal">
+      <div>
+        <p class="section-eyebrow">Words &amp; Reflections</p>
+        <h2 class="section-title" style="color:var(--parchment)">Latest <em style="color:var(--mauve)">Posts</em></h2>
+      </div>
+      <a href="#blogs" class="view-all">All Posts →</a>
+    </div>
+    <div class="blogs-grid reveal">
+      <!-- Featured -->
+      <div class="blog-card featured" onclick="openPost('bug1')">
+        <div class="blog-num">01</div>
+        <div class="blog-meta">
+          <span class="blog-cat">Culture</span>
+          <span class="blog-date">June 2025</span>
+        </div>
+        <h3 class="blog-title">The Cultural "Bug"</h3>
+        <p class="blog-excerpt">Because in this century — specifically in 2026 — traditional "bugs" need to be eliminated ASAP. We respect our roots, but not the labor attached to them. Why is it taboo to talk about something that has been torturing us for years?</p>
+        <button class="read-more">Read Full Post →</button>
+      </div>
+      <!-- Small 1 -->
+      <div class="blog-card small" onclick="openPost('welcome')">
+        <div class="blog-num">00</div>
+        <div class="blog-meta">
+          <span class="blog-cat">Welcome</span>
+          <span class="blog-date">June 2025</span>
+        </div>
+        <h3 class="blog-title">Welcome to My Blog</h3>
+        <p class="blog-excerpt">A space dedicated to exploring sociocultural ideas, everyday experiences, and the world we live in.</p>
+        <button class="read-more">Read →</button>
+      </div>
+      <!-- Small 2 -->
+      <div class="blog-card small" onclick="openPost('bug2')">
+        <div class="blog-num">02</div>
+        <div class="blog-meta">
+          <span class="blog-cat">Culture</span>
+          <span class="blog-date">June 2025</span>
+        </div>
+        <h3 class="blog-title">The Bug – Part II</h3>
+        <p class="blog-excerpt">It wouldn't be fair to say the joint family system is purely a "bug" — but considering how it has affected people, it can certainly be seen as one.</p>
+        <button class="read-more">Read →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy-section" id="privacy">
+  <div class="privacy-inner">
+    <p class="section-eyebrow reveal">Transparency First</p>
+    <h2 class="section-title reveal">Privacy <em>Policy</em></h2>
+    <div class="privacy-block reveal">
+      <h3>Information We Collect</h3>
+      <ul>
+        <li>Personal information you provide when contacting us (e.g., email address)</li>
+        <li>Non-personal information automatically collected when you visit, such as browser type, device type, and pages visited</li>
+      </ul>
+    </div>
+    <div class="privacy-block reveal">
+      <h3>How We Use Your Information</h3>
+      <ul>
+        <li>Respond to your messages and inquiries</li>
+        <li>Improve our blog content and user experience</li>
+        <li>Show relevant ads through Google AdSense</li>
+      </ul>
+    </div>
+    <div class="privacy-block reveal">
+      <h3>Google AdSense</h3>
+      <p>Our blog uses Google AdSense, which may use cookies to serve ads based on your previous visits to other websites. Google may collect information about your interaction with ads on our site. <a href="https://policies.google.com/technologies/ads" style="color:var(--mauve)">Learn more about Google's practices.</a></p>
+    </div>
+    <div class="privacy-block reveal">
+      <h3>Cookies</h3>
+      <p>We use cookies to enhance your browsing experience. Cookies do not personally identify you.</p>
+    </div>
+    <div class="privacy-block reveal">
+      <h3>Third-Party Links</h3>
+      <p>Our blog may contain links to other websites. We are not responsible for the privacy practices of those sites.</p>
+    </div>
+    <div class="privacy-block reveal">
+      <h3>Children's Privacy</h3>
+      <p>Our blog is not directed at children under 13. We do not knowingly collect information from children.</p>
+    </div>
+    <div class="privacy-block reveal">
+      <h3>Consent &amp; Updates</h3>
+      <p>By using our blog, you consent to this Privacy Policy. We may update this Policy occasionally; any changes will be posted here with a new Effective Date.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <p class="section-eyebrow">Say Hello</p>
+    <h2 class="section-title">Let's <em style="color:var(--mauve)">Connect</em></h2>
+    <p class="contact-desc">Follow me and reach out. Feel free to DM me for questions, suggestions, or just to say hi!</p>
+    <a href="https://instagram.com/authentically_amna" target="_blank" class="instagram-link">
+      <svg class="insta-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @authentically_amna on Instagram
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Authentically <span>Amna</span></div>
+  <p class="footer-copy">© 2025 Authentically Amna. All rights reserved.</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ── POST DATA ── */
+const posts = {
+  welcome: {
+    cat:'Welcome', date:'June 2025',
+    title:'Welcome to My Blog',
+    lead:'A space for honest thoughts, simple words, and meaningful conversations.',
+    body:`<p>This space is dedicated to exploring sociocultural ideas, everyday experiences, and the world we live in. Here, I share thoughts on society, culture, identity, and the subtle ways they shape our lives.</p>
+<p>Through simple reflections and honest writing, this blog aims to observe, question, and understand the patterns that influence how we think, behave, and connect with others.</p>
+<p>Whether it's modern life, traditions, or the changes happening around us, each post is an attempt to look a little deeper and think a little differently.</p>
+<p>Thank you for being here and being part of this journey of ideas and perspectives.</p>`
+  },
+  bug1: {
+    cat:'Culture', date:'June 2025',
+    title:'The Cultural "Bug"',
+    lead:'Traditional "bugs" need to be eliminated ASAP. We respect our roots, but not the labor attached to them.',
+    body:`<p>If I say shared labor is still a necessity for survival, it will be a great point to argue — and I'll acknowledge the consequences.</p>
+<p>Because in this century — specifically in 2026 — traditional "bugs" need to be eliminated ASAP. We respect our roots, but not the labor attached to them. Why is it taboo to talk about something that has been torturing us for years? Either mentally or physically. We say our society has witnessed a big transformation. But what transformation? One in which we kept ignoring basic needs — individualism and independence.</p>
+<p>Hence, I can say with utmost conviction that it was just a minor cultural shift. We kept the factor of adjustment constant, and if someone cannot adapt to the new conditions, we push them toward depression — if not worse. However, if it benefits the elderly by maintaining ancient patriarchy within the family, then suddenly it is considered "great culture."</p>
+<p>This is what we have been standing on for years, and yet we still claim to be shaken. We didn't stand — we compromised. This is how "radical" we have become. We are educated (1950–2000), but is this what education taught us? Collectivism?</p>
+<h3>Let's dive deeper and see where this "bug" was rooted.</h3>
+<p>In ancient agrarian societies, where families worked together because of shared resources and land. It was influenced by family unity, interdependence, and respect for elders.</p>
+<p>Making a way out of the crowd doesn't mean you hate everyone in it — it simply means you were suffocated. The same goes for this "bug." If you make an independent decision, express an opinion, or have a personal wish, it doesn't mean you disrespect your elders. And if you present a counterargument — even to clarify or offer a different perspective — it doesn't mean you humiliate them.</p>
+<p>Who is responsible for your loss of privacy? For personality clashes? For dependency? For decision conflicts? And the pressure to conform?</p>
+<p><em>Guess the bug until I come up with another part. I'll for sure reveal it.</em></p>`,
+    sign:'— AMNA'
+  },
+  bug2: {
+    cat:'Culture', date:'June 2025',
+    title:'The Bug – Part II',
+    lead:'From silence to self-expression, women need to redefine their role in society.',
+    body:`<p>It wouldn't be a fair argument to say that the joint family system is purely a "bug," but considering how it has affected people, I believe it can be seen as one.</p>
+<h3>Why is it not a bug?</h3>
+<p>It provides stability and support to individuals who cannot work, are married with limited resources, or are underage.</p>
+<h3>Why is it a bug?</h3>
+<p>It has taken away one of humanity's greatest needs: <strong>freedom</strong>.</p>
+<p>This is because decision-making is collective, and 70 percent of the time it is led by a male or a senior female figure. Women — especially daughters-in-law — have little say in their education, careers, and even the most basic choices, such as their daily lifestyle.</p>
+<p>It not only affects independence but also limits personal growth. This is because women are assigned cooking, cleaning, and childcare as duties, not choices.</p>
+<h3>How strong is the power hierarchy? The saas-bahu dynamic.</h3>
+<p>This dynamic shows that elders hold authority, while the younger members are expected to be obedient. Elders maintain control, and this control often eliminates privacy — leading to emotional stress.</p>
+<p>Constant supervision was never the goal of a joint family system. However, elders have turned it into a system of internalized patriarchy.</p>
+<p>According to a 2026 survey, 66 percent of women in Central Asian regions experienced mild to chronic depression due to a lack of expression.</p>
+<p>Because family responsibility comes first, this system has also led to economic dependency. Speaking up is often seen as rebellion or disrespect. Despite being treated this way, women are often forced to remain silent and endure whatever treatment they receive.</p>
+<p>Perhaps this is due to a cultural clash. Women today seek independence and a modern lifestyle, while the older generation often enforces tradition and obedience — a collectivist culture, where the family comes before the individual.</p>
+<p>I will not support the joint family system unless the majority are given the opportunity to balance family life and career.</p>
+<p><strong>From silence to self-expression, women need to redefine their role in society.</strong></p>
+<p>But the bug remains the same: <em>The joint family system.</em></p>
+<p>Bye, until next time.</p>`,
+    sign:'—Amna'
+  }
+};
+
+function openPost(id) {
+  const p = posts[id];
+  document.getElementById('modal-body').innerHTML = `
+    <div class="post-cat-date">
+      <span class="post-cat">${p.cat}</span>
+      <span class="post-date">${p.date}</span>
+    </div>
+    <h1 class="post-title">${p.title}</h1>
+    <p class="post-lead">${p.lead}</p>
+    <div class="post-body">${p.body}</div>
+    ${p.sign ? `<div class="post-signature">${p.sign}</div>` : ''}
+  `;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── HAMBURGER ── */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMobile() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+
+/* ── SCROLL REVEAL ── */
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+reveals.forEach(r => revealObs.observe(r));
+
+/* ── PAGE DOTS ── */
+function goTo(sel) {
+  document.querySelector(sel)?.scrollIntoView({ behavior: 'smooth' });
+}
+const sections = ['#hero','#about','#blogs','#privacy','#contact'];
+const dots = document.querySelectorAll('.page-dot');
+window.addEventListener('scroll', () => {
+  let cur = 0;
+  sections.forEach((s, i) => {
+    const el = document.querySelector(s);
+    if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.5) cur = i;
+  });
+  dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+}, { passive: true });
+</script>
+</body>
+</html>

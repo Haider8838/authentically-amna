@@ -11,1026 +11,1085 @@ html{scroll-behavior:smooth}
 :root{
   --void:#F7F0E6;
   --deep:#EDE4D6;
-
   --rose:#C4788A;
-
   --rose-dim:#a85e72;
-
   --gold:#D4A853;
-
   --sage:#8FA68E;
-
   --violet:#7B5EA7;
-
   --violet-soft:#9b7ec8;
-
   --ink:#0D0F1A;
-
   --glass:rgba(13,15,26,0.05);
-
   --glass-border:rgba(13,15,26,0.12);
-
 }
-
-
 
 /* ── CUSTOM CURSOR ── */
-
 body{font-family:'Inter',sans-serif;background:var(--void);color:var(--ink);overflow-x:hidden;width:100%;cursor:none}
-
 .cursor{
-
   position:fixed;width:12px;height:12px;border-radius:50%;
-
   background:var(--rose);pointer-events:none;z-index:9999;
-
   transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,background 0.3s;
-
   mix-blend-mode:multiply;
-
 }
-
 .cursor-trail{
-
   position:fixed;width:36px;height:36px;border-radius:50%;
-
   border:1.5px solid var(--rose);pointer-events:none;z-index:9998;
-
   transform:translate(-50%,-50%);
-
   transition:left 0.12s ease,top 0.12s ease,width 0.3s,height 0.3s,opacity 0.3s;
-
   opacity:0.5;
-
 }
-
 .cursor-label{
-
   position:fixed;pointer-events:none;z-index:9999;
-
   font-family:'Space Grotesk',sans-serif;font-size:0.6rem;font-weight:700;
-
   letter-spacing:0.15em;text-transform:uppercase;color:white;
-
   background:var(--rose);padding:0.25rem 0.6rem;border-radius:100px;
-
   transform:translate(10px,-50%);opacity:0;transition:opacity 0.2s;
-
   white-space:nowrap;
-
 }
-
 .cursor-label.show{opacity:1}
-
 body.hovering-card .cursor{width:18px;height:18px;background:var(--gold)}
-
 body.hovering-card .cursor-trail{width:50px;height:50px;border-color:var(--gold)}
 
-
-
 /* ── READING PROGRESS ── */
-
 #progress-bar{
-
   position:fixed;top:0;left:0;height:3px;width:0%;
-
   background:linear-gradient(90deg,var(--rose),var(--gold),var(--violet));
-
   z-index:9997;transition:width 0.1s linear;
-
   box-shadow:0 0 8px rgba(196,120,138,0.5);
-
 }
-
-
 
 /* ── CANVAS PARTICLES ── */
-
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-
-
 /* ── NAV ── */
-
 nav{
-
   position:fixed;top:0;left:0;right:0;z-index:500;
-
   display:flex;align-items:center;justify-content:space-between;
-
   padding:1rem 3.5rem;
-
   background:rgba(247,240,230,0.88);
-
   backdrop-filter:blur(20px);
-
   border-bottom:1px solid var(--glass-border);
-
   transition:padding 0.3s;
-
 }
-
 nav.scrolled{padding:0.7rem 3.5rem;background:rgba(247,240,230,0.96)}
-
 .nav-logo{
-
   font-family:'Playfair Display',serif;
-
   font-size:1.3rem;font-weight:900;
-
   background:linear-gradient(90deg,var(--rose),var(--gold));
-
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-
   text-decoration:none;white-space:nowrap;cursor:none;
-
 }
-
 .nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
-
 .nav-links a{
-
   font-family:'Space Grotesk',sans-serif;
-
   font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
-
   color:rgba(13,15,26,0.6);text-decoration:none;position:relative;
-
   transition:color 0.3s;cursor:none;
-
 }
-
 .nav-links a:hover{color:var(--rose)}
-
 .nav-links a::after{
-
   content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;
-
   background:var(--rose);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;
-
 }
-
 .nav-links a:hover::after{transform:scaleX(1)}
-
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:none;background:none;border:none;padding:4px}
-
 .hamburger span{display:block;width:24px;height:2px;background:var(--ink);transition:all 0.3s}
-
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-
 .hamburger.open span:nth-child(2){opacity:0}
-
 .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
 .mobile-menu{
-
   display:none;position:fixed;top:57px;left:0;right:0;
-
   background:rgba(247,240,230,0.97);backdrop-filter:blur(20px);
-
   z-index:499;flex-direction:column;padding:1.5rem 2rem 2rem;
-
   border-bottom:1px solid var(--glass-border);gap:1.2rem;
-
 }
-
 .mobile-menu.open{display:flex}
-
 .mobile-menu a{
-
   font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:500;
-
   letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);
-
   text-decoration:none;padding:0.5rem 0;border-bottom:1px solid var(--glass-border);transition:color 0.3s;
-
 }
-
 .mobile-menu a:hover{color:var(--rose)}
 
-
-
 /* ── DARK/LIGHT TOGGLE ── */
-
 .theme-toggle{
-
   width:44px;height:24px;border-radius:100px;
-
   background:rgba(13,15,26,0.12);border:1px solid var(--glass-border);
-
   cursor:none;position:relative;transition:background 0.3s;flex-shrink:0;
-
 }
-
 .theme-toggle::after{
-
   content:'☀️';position:absolute;top:2px;left:2px;
-
   width:18px;height:18px;border-radius:50%;
-
   font-size:11px;display:flex;align-items:center;justify-content:center;
-
   background:white;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-
   box-shadow:0 1px 4px rgba(0,0,0,0.15);
-
 }
-
 body.dark .theme-toggle::after{transform:translateX(20px);content:'🌙'}
 
-/* ink flood for theme transition */
-
+/* Ink flood effect container */
 .ink-flood{
-
   position:fixed;inset:0;z-index:8000;pointer-events:none;
-
   border-radius:50%;transform:scale(0);
-
-  background:radial-gradient(circle,#0D0F1A 0%,#0D0F1A 100%);
-
-  transition:transform 0.7s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;
-
-  opacity:0;transform-origin:top right;
-
+  background:var(--ink);
+  transition:transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+  opacity:0;transform-origin:center center;
 }
-
+body.dark-transition-flash .ink-flood{
+  background:var(--void);
+}
 .ink-flood.flooding{transform:scale(4);opacity:1}
 
-.ink-flood.done{transform:scale(4);opacity:0}
-
-
-
 /* DARK MODE overrides */
-
 body.dark{background:#0D0F1A;color:#F7F0E6}
-
-body.dark nav{background:rgba(13,15,26,0.9)}
-
+body.dark nav{background:rgba(13,15,26,0.9);border-color:rgba(247,240,230,0.08)}
 body.dark .mobile-menu{background:rgba(13,15,26,0.97)}
-
 body.dark .nav-links a{color:rgba(247,240,230,0.6)}
-
 body.dark .hamburger span{background:#F7F0E6}
-
 body.dark .mobile-menu a{color:#F7F0E6;border-color:rgba(247,240,230,0.1)}
-
 body.dark .hero-title .line1{color:#F7F0E6}
-
 body.dark .hero-sub{color:rgba(247,240,230,0.6)}
-
-body.dark .hero-3d-card{box-shadow:20px 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(196,120,138,0.2)}
-
+body.dark .hero-3d-card{box-shadow:20px 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(196,120,138,0.2);background:rgba(13,15,26,0.7)}
 body.dark .card-quote{color:#F7F0E6}
-
 body.dark .section-title{color:#F7F0E6}
-
 body.dark .about-bio{color:rgba(247,240,230,0.65)}
-
 body.dark .about-section{background:linear-gradient(180deg,#0D0F1A,#161929)}
-
 body.dark .blogs-section{background:#0D0F1A}
-
 body.dark .blog-card{background:rgba(247,240,230,0.04);border-color:rgba(247,240,230,0.1)}
-
 body.dark .blog-card.featured{background:linear-gradient(to top,rgba(22,25,41,0.99) 40%,rgba(196,120,138,0.1) 100%)}
-
 body.dark .blog-title{color:#F7F0E6}
-
 body.dark .blog-excerpt{color:rgba(247,240,230,0.45)}
-
 body.dark .blog-date{color:rgba(247,240,230,0.3)}
-
 body.dark .contact-section{background:linear-gradient(180deg,#0D0F1A,#161929)}
-
 body.dark .contact-desc{color:rgba(247,240,230,0.5)}
-
-body.dark footer{background:#0a0b12}
-
+body.dark footer{background:#0a0b12;border-color:rgba(247,240,230,0.08)}
 body.dark .footer-links a{color:rgba(247,240,230,0.4)}
-
-body.dark .footer-copy{color:rgba(247,240,230,0.25)}
-
+body.dark .footer-copy{color:rgba(247,240,230,0.25);border-color:rgba(247,240,230,0.08)}
 body.dark .theme-toggle{background:rgba(247,240,230,0.1)}
-
-body.dark .glass-border{border-color:rgba(247,240,230,0.08)}
-
 body.dark .page-dot{background:rgba(247,240,230,0.2)}
-
 body.dark .about-card-face{background:linear-gradient(145deg,rgba(123,94,167,0.2),rgba(196,120,138,0.12));border-color:rgba(123,94,167,0.3)}
-
 body.dark .tag{color:var(--violet-soft)}
-
-body.dark .modal-content{background:linear-gradient(145deg,#161929,#0D0F1A);border-color:rgba(196,120,138,0.2)}
-
-body.dark .privacy-modal{background:linear-gradient(145deg,#161929,#0D0F1A);border-color:rgba(123,94,167,0.2)}
-
-body.dark .post-title,.dark .post-body strong{color:#F7F0E6}
-
-body.dark .post-lead,.dark .post-body{color:rgba(247,240,230,0.7)}
-
+body.dark .modal-overlay{background:rgba(13,15,26,0.98)}
+body.dark .modal-content{background:none}
+body.dark .post-title,body.dark .post-body strong{color:#F7F0E6}
+body.dark .post-lead,body.dark .post-body{color:rgba(247,240,230,0.7)}
 body.dark .post-body h3{color:#F7F0E6}
-
-body.dark .priv-block p,.dark .priv-block li{color:rgba(247,240,230,0.65)}
-
-body.dark .privacy-modal h2{background:linear-gradient(90deg,var(--rose),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
 body.dark .modal-close{color:#F7F0E6}
-
 body.dark .grid-lines{background-image:linear-gradient(rgba(196,120,138,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(196,120,138,0.06) 1px,transparent 1px)}
 
-
-
 /* ── HERO ── */
-
 .hero{
-
   position:relative;min-height:100vh;width:100%;
-
   display:flex;align-items:center;justify-content:center;
-
   overflow:hidden;z-index:1;
-
 }
-
 .hero-orb{
-
   position:absolute;width:700px;height:700px;border-radius:50%;
-
   background:conic-gradient(from 0deg,var(--violet),var(--rose),var(--gold),var(--sage),var(--violet));
-
   filter:blur(90px);opacity:0.15;animation:orbSpin 22s linear infinite;pointer-events:none;
-
 }
-
 @keyframes orbSpin{from{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.1)}to{transform:rotate(360deg) scale(1)}}
-
 .grid-lines{
-
   position:absolute;inset:0;
-
   background-image:linear-gradient(rgba(196,120,138,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(196,120,138,0.06) 1px,transparent 1px);
-
   background-size:60px 60px;
-
   transform:perspective(800px) rotateX(20deg);transform-origin:bottom;pointer-events:none;
-
 }
-
 .hero-content{
-
   position:relative;z-index:2;
-
   display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
-
   max-width:1200px;width:100%;padding:7rem 3rem 4rem;
-
 }
-
 .hero-left{position:relative}
-
 .hero-badge{
-
   display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 1rem;
-
   border:1px solid rgba(196,120,138,0.35);border-radius:100px;
-
   font-family:'Space Grotesk',sans-serif;font-size:0.68rem;font-weight:600;
-
   letter-spacing:0.15em;text-transform:uppercase;color:var(--rose);
-
   margin-bottom:1.5rem;background:rgba(196,120,138,0.08);
-
   opacity:0;animation:fadeUp 0.8s ease 0.1s forwards;
-
 }
-
 .hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--rose);animation:pulse 2s infinite}
-
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(196,120,138,0.5)}50%{opacity:0.7;box-shadow:0 0 0 7px rgba(196,120,138,0)}}
 
-
-
 /* INK BLEED TITLE */
-
 .hero-title{
-
   font-family:'Playfair Display',serif;
-
   font-size:clamp(3rem,5.5vw,5.8rem);font-weight:900;line-height:1;
-
 }
-
 .hero-title .line1{display:block;color:var(--ink)}
-
 .hero-title .line2{
-
   display:block;font-style:italic;font-weight:400;
-
   background:linear-gradient(90deg,var(--rose) 0%,var(--gold) 50%,var(--violet) 100%);
-
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-
   background-size:200% auto;animation:gradientShift 5s linear infinite;
-
 }
-
 @keyframes gradientShift{0%{background-position:0% center}100%{background-position:200% center}}
 
-
-
 /* Ink bleed letter animation */
-
 .ink-letter{
-
   display:inline-block;opacity:0;
-
   animation:inkBleed 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
-
   filter:blur(8px);transform:scale(1.3);
-
 }
-
 @keyframes inkBleed{
-
   0%{opacity:0;filter:blur(12px);transform:scale(1.4)}
-
   60%{opacity:1;filter:blur(2px);transform:scale(1.02)}
-
   100%{opacity:1;filter:blur(0);transform:scale(1)}
-
 }
-
-
 
 .hero-sub{
-
   margin-top:1.5rem;font-size:1.05rem;line-height:1.8;
-
   color:rgba(13,15,26,0.6);max-width:440px;
-
   opacity:0;animation:fadeUp 0.8s ease 1.4s forwards;
-
 }
-
 .hero-cta{
-
   margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;
-
   opacity:0;animation:fadeUp 0.8s ease 1.6s forwards;
-
 }
-
 .btn-glow{
-
   display:inline-flex;align-items:center;gap:0.5rem;padding:0.9rem 2rem;
-
   border:none;cursor:none;font-family:'Space Grotesk',sans-serif;font-size:0.82rem;
-
   font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
-
   text-decoration:none;border-radius:4px;
-
   background:linear-gradient(135deg,var(--rose),var(--violet));color:white;
-
   position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;
-
   box-shadow:0 4px 24px rgba(196,120,138,0.3);
-
 }
-
 .btn-glow::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold),var(--rose));opacity:0;transition:opacity 0.3s}
-
 .btn-glow:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(196,120,138,0.45)}
-
 .btn-glow:hover::before{opacity:1}
-
 .btn-glow span{position:relative;z-index:1}
-
 .btn-outline{
-
   display:inline-flex;align-items:center;gap:0.5rem;padding:0.9rem 2rem;
-
   border:1px solid var(--glass-border);cursor:none;
-
   font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;
-
   letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;
-
   border-radius:4px;color:var(--ink);background:var(--glass);transition:all 0.3s;
-
 }
-
 .btn-outline:hover{border-color:var(--rose);color:var(--rose);box-shadow:0 4px 20px rgba(196,120,138,0.15)}
 
-
-
 /* 3D floating hero card */
-
 .hero-right{display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeUp 0.8s ease 1.8s forwards}
-
 .hero-3d-card{
-
   width:100%;max-width:360px;
-
   background:rgba(247,240,230,0.7);
-
   border:1px solid var(--glass-border);border-radius:20px;padding:2.5rem;
-
   backdrop-filter:blur(20px);
-
   animation:float3d 6s ease-in-out infinite;
-
   position:relative;overflow:hidden;
-
   box-shadow:0 0 0 1px rgba(196,120,138,0.15),20px 20px 50px rgba(13,15,26,0.12),inset 0 1px 0 rgba(255,255,255,0.6);
-
 }
-
 .hero-3d-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(196,120,138,0.06),rgba(123,94,167,0.05));pointer-events:none}
-
 @keyframes float3d{
-
   0%,100%{transform:perspective(800px) rotateY(-8deg) rotateX(4deg) translateY(0)}
-
   33%{transform:perspective(800px) rotateY(-5deg) rotateX(2deg) translateY(-12px)}
-
   66%{transform:perspective(800px) rotateY(-10deg) rotateX(6deg) translateY(-6px)}
-
 }
-
 .card-tag{font-family:'Space Grotesk',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
-
 .card-tag::before{content:'';width:20px;height:1px;background:var(--rose)}
-
 .card-quote{font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;font-weight:400;line-height:1.65;color:var(--ink);margin-bottom:1.5rem;position:relative;z-index:1}
-
 .card-author{font-family:'Space Grotesk',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase}
-
 .card-glow{position:absolute;bottom:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(196,120,138,0.18),transparent 70%);pointer-events:none}
 
-
-
 /* ── MARQUEE ── */
-
 .marquee-wrap{
-
   position:relative;z-index:10;overflow:hidden;padding:0.8rem 0;
-
   background:linear-gradient(90deg,var(--rose),var(--violet),var(--gold),var(--rose));
-
   background-size:300% auto;animation:gradientShift 8s linear infinite;
-
 }
-
 .marquee-track{display:flex;white-space:nowrap;animation:marquee 30s linear infinite}
-
 .marquee-item{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:white;padding:0 1.5rem;flex-shrink:0}
-
 .marquee-sep{color:rgba(255,255,255,0.45);padding:0 0.3rem;flex-shrink:0}
-
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-
-
 /* ── WAVE DIVIDER ── */
-
 .wave-divider{position:relative;z-index:5;overflow:hidden;line-height:0;margin-top:-2px}
-
 .wave-divider svg{display:block;width:100%;height:60px}
-
 .wave-divider.flip{transform:scaleY(-1)}
 
-
-
 /* ── ABOUT ── */
-
 .about-section{
-
   position:relative;z-index:1;padding:8rem 3.5rem;
-
   background:linear-gradient(180deg,var(--void) 0%,var(--deep) 100%);
-
 }
-
 .about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:center}
-
 .about-visual{display:flex;justify-content:center}
-
 .about-3d-wrap{position:relative;width:300px;height:420px;transform-style:preserve-3d;animation:aboutFloat 8s ease-in-out infinite}
-
 @keyframes aboutFloat{
-
   0%,100%{transform:perspective(1000px) rotateY(-15deg) rotateX(5deg)}
-
   50%{transform:perspective(1000px) rotateY(-10deg) rotateX(2deg) translateY(-15px)}
-
 }
-
 .about-card-face{
-
   width:100%;height:100%;border-radius:20px;
-
   background:linear-gradient(145deg,rgba(123,94,167,0.12),rgba(196,120,138,0.08));
-
   border:1px solid rgba(196,120,138,0.2);backdrop-filter:blur(20px);
-
   display:flex;flex-direction:column;justify-content:flex-end;
-
   padding:2rem;overflow:hidden;position:relative;
-
   box-shadow:0 30px 80px rgba(13,15,26,0.15),inset 0 1px 0 rgba(255,255,255,0.5);
-
 }
-
 .about-initial{
-
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-
   font-family:'Playfair Display',serif;font-size:14rem;font-weight:900;
-
   background:linear-gradient(135deg,rgba(196,120,138,0.15),rgba(123,94,167,0.08));
-
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-
   line-height:1;user-select:none;pointer-events:none;
-
 }
-
 .about-glow-orb{position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(196,120,138,0.2),transparent 70%);pointer-events:none}
-
 .about-glow-orb2{position:absolute;bottom:-40px;left:-40px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(143,166,142,0.15),transparent 70%);pointer-events:none}
-
 .about-card-name{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;font-style:italic;background:linear-gradient(90deg,var(--ink),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;position:relative;z-index:1}
-
 .about-card-role{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:0.3rem;position:relative;z-index:1}
-
 .about-ring{position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;border:1px solid rgba(212,168,83,0.25);animation:ringPulse 4s ease-in-out infinite}
-
 .about-ring::before{content:'';position:absolute;inset:10px;border-radius:50%;border:1px solid rgba(212,168,83,0.12)}
-
 @keyframes ringPulse{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.1);opacity:1}}
 
-
-
 /* TYPEWRITER */
-
 .typewriter-wrap{min-height:5.5rem}
-
 .typewriter{border-right:2px solid var(--rose);padding-right:3px;animation:blink 0.75s step-end infinite}
-
 @keyframes blink{0%,100%{border-color:var(--rose)}50%{border-color:transparent}}
 
-
-
 .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--rose);margin-bottom:1rem;display:flex;align-items:center;gap:0.7rem}
-
 .eyebrow::before{content:'';width:24px;height:2px;background:linear-gradient(90deg,var(--rose),var(--gold));flex-shrink:0}
-
 .section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.2;color:var(--ink);margin-bottom:1.2rem}
-
 .section-title em{font-style:italic;background:linear-gradient(90deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
 .about-bio{font-size:0.97rem;line-height:1.9;color:rgba(13,15,26,0.65);margin-bottom:1.2rem}
-
 .about-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem}
-
 .tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;font-weight:600;letter-spacing:0.06em;padding:0.35rem 0.9rem;border-radius:100px;border:1px solid rgba(123,94,167,0.3);color:var(--violet);background:rgba(123,94,167,0.06);transition:all 0.25s;cursor:none}
-
 .tag:hover{background:var(--violet);color:white}
-
 .social-btn{display:inline-flex;align-items:center;gap:0.6rem;padding:0.75rem 1.5rem;border-radius:100px;border:1px solid rgba(196,120,138,0.35);background:rgba(196,120,138,0.06);color:var(--rose);font-family:'Space Grotesk',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:0.05em;text-decoration:none;transition:all 0.3s;cursor:none}
-
 .social-btn:hover{background:var(--rose);color:white;box-shadow:0 6px 24px rgba(196,120,138,0.3)}
-
 .insta-icon{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
 
-
-
 /* ── BLOGS ── */
-
 .blogs-section{position:relative;z-index:1;padding:8rem 3.5rem;background:var(--void)}
-
 .blogs-inner{max-width:1200px;margin:0 auto}
-
 .blogs-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;flex-wrap:wrap;gap:1rem}
-
 .blogs-header .section-title{margin-bottom:0}
-
 .view-all{font-family:'Space Grotesk',sans-serif;font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--rose);text-decoration:none;display:flex;align-items:center;gap:0.4rem;transition:gap 0.3s;white-space:nowrap;cursor:none}
-
 .view-all:hover{gap:0.9rem}
 
-
-
 /* ── HORIZONTAL SCROLL ARCHIVE ── */
-
 .archive-section{position:relative;z-index:1;padding:4rem 0 6rem;background:var(--deep);overflow:hidden}
-
 .archive-label{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--rose);padding:0 3.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:0.7rem}
-
 .archive-label::before{content:'';width:24px;height:2px;background:linear-gradient(90deg,var(--rose),var(--gold));flex-shrink:0}
-
 .archive-label .drag-hint{color:rgba(13,15,26,0.4);font-weight:400;letter-spacing:0.1em;margin-left:auto;font-size:0.65rem}
-
 .h-scroll{
-
   display:flex;gap:1.5rem;padding:0.5rem 3.5rem 2rem;
-
   overflow-x:auto;cursor:grab;user-select:none;
-
   scrollbar-width:thin;scrollbar-color:var(--rose) transparent;
-
 }
-
 .h-scroll:active{cursor:grabbing}
-
 .h-scroll::-webkit-scrollbar{height:3px}
-
 .h-scroll::-webkit-scrollbar-thumb{background:var(--rose);border-radius:100px}
-
 .h-scroll::-webkit-scrollbar-track{background:transparent}
-
 .h-card{
-
   flex-shrink:0;width:280px;
-
   background:rgba(247,240,230,0.6);border:1px solid var(--glass-border);
-
   border-radius:16px;padding:1.8rem;cursor:none;
-
   position:relative;overflow:hidden;
-
   transition:transform 0.3s,box-shadow 0.3s;
-
   backdrop-filter:blur(10px);
-
 }
-
 .h-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(13,15,26,0.12)}
-
 .h-card-num{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:rgba(196,120,138,0.12);line-height:1;margin-bottom:0.5rem}
-
 .h-card-cat{font-family:'Space Grotesk',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem}
-
 .h-card-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;line-height:1.35;color:var(--ink);margin-bottom:0.7rem;transition:color 0.3s}
-
 .h-card:hover .h-card-title{color:var(--rose)}
-
 .h-card-excerpt{font-size:0.82rem;line-height:1.65;color:rgba(13,15,26,0.5);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-
 body.dark .h-card{background:rgba(22,25,41,0.8);border-color:rgba(247,240,230,0.08)}
-
 body.dark .h-card-title{color:#F7F0E6}
-
 body.dark .h-card-excerpt{color:rgba(247,240,230,0.45)}
-
 body.dark .archive-section{background:#161929}
-
 body.dark .archive-label .drag-hint{color:rgba(247,240,230,0.3)}
 
-
-
 /* 3D blog grid */
-
 .blogs-grid{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:auto auto;gap:1.5rem}
-
 .blog-card{
-
   background:rgba(13,15,26,0.04);border:1px solid var(--glass-border);
-
   border-radius:16px;padding:2rem;cursor:none;
-
   position:relative;overflow:hidden;
-
   transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s;
-
   transform-style:preserve-3d;backdrop-filter:blur(10px);
-
 }
-
 .blog-card::before{content:'';position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(196,120,138,0.05),rgba(123,94,167,0.04));opacity:0;transition:opacity 0.4s}
-
 .blog-card:hover{box-shadow:0 24px 50px rgba(13,15,26,0.1),0 0 0 1px rgba(196,120,138,0.25),0 0 30px rgba(196,120,138,0.06);border-color:rgba(196,120,138,0.25)}
-
 .blog-card:hover::before{opacity:1}
-
 .blog-card.featured{grid-column:1;grid-row:1/3;display:flex;flex-direction:column;justify-content:flex-end;min-height:480px;background:linear-gradient(to top,rgba(237,228,214,0.99) 35%,rgba(196,120,138,0.1) 100%);border-color:rgba(196,120,138,0.18)}
-
 .blog-card.small{grid-column:2}
-
 .card-cover{
-
   position:absolute;inset:0;border-radius:16px;opacity:0.07;pointer-events:none;
-
   background-size:cover;background-position:center;
-
   transition:opacity 0.4s;
-
 }
-
 .blog-card:hover .card-cover{opacity:0.12}
-
 .blog-card.featured .card-cover{opacity:0.1}
-
 .cover-culture{background:radial-gradient(ellipse at 30% 40%,var(--rose) 0%,var(--violet) 60%,transparent 100%)}
-
 .cover-welcome{background:radial-gradient(ellipse at 70% 60%,var(--gold) 0%,var(--sage) 60%,transparent 100%)}
-
 .blog-meta{display:flex;align-items:center;gap:0.7rem;margin-bottom:0.9rem;flex-wrap:wrap}
-
 .blog-cat{font-family:'Space Grotesk',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(212,168,83,0.3);padding:0.18rem 0.55rem;border-radius:100px;background:rgba(212,168,83,0.08)}
-
 .blog-date{font-family:'Space Grotesk',sans-serif;font-size:0.65rem;color:rgba(13,15,26,0.38);letter-spacing:0.04em}
-
 .blog-num{margin-left:auto;font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,rgba(196,120,138,0.18),rgba(123,94,167,0.1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-
 .blog-card.featured .blog-num{font-size:5rem}
-
 .blog-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;line-height:1.35;color:var(--ink);margin-bottom:0.8rem;transition:color 0.3s}
-
 .blog-card.featured .blog-title{font-size:1.8rem}
-
 .blog-card:hover .blog-title{color:var(--rose)}
-
 .blog-excerpt{font-size:0.87rem;line-height:1.7;color:rgba(13,15,26,0.5);margin-bottom:1.2rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-
 .blog-card.featured .blog-excerpt{-webkit-line-clamp:4}
-
 .read-btn{display:inline-flex;align-items:center;gap:0.4rem;font-family:'Space Grotesk',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rose);background:none;border:none;cursor:none;padding:0;transition:gap 0.3s,color 0.3s}
-
 .read-btn:hover{gap:0.9rem;color:var(--gold)}
 
-
-
 /* ── CONTACT ── */
-
 .contact-section{position:relative;z-index:1;padding:8rem 3.5rem;background:linear-gradient(180deg,var(--void),var(--deep));text-align:center;overflow:hidden}
-
 .contact-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(196,120,138,0.1),transparent 70%);pointer-events:none}
-
 .contact-inner{max-width:560px;margin:0 auto;position:relative;z-index:1}
-
 .contact-section .eyebrow{justify-content:center}
-
 .contact-section .eyebrow::before{display:none}
-
 .contact-desc{font-size:1rem;line-height:1.8;color:rgba(13,15,26,0.55);margin:1.2rem 0 2.2rem}
-
 .insta-btn{display:inline-flex;align-items:center;gap:0.8rem;padding:1rem 2.5rem;border-radius:100px;background:rgba(196,120,138,0.08);border:1px solid rgba(196,120,138,0.3);color:var(--ink);font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:600;text-decoration:none;transition:all 0.4s;cursor:none}
-
 .insta-btn:hover{background:var(--rose);border-color:var(--rose);color:white;transform:translateY(-3px);box-shadow:0 12px 40px rgba(196,120,138,0.3)}
 
-
-
 /* ── FOOTER ── */
-
 footer{position:relative;z-index:10;background:var(--deep);border-top:1px solid var(--glass-border);padding:2.5rem 3.5rem}
-
 .footer-main{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;max-width:1200px;margin:0 auto}
-
 .footer-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
 .footer-links{display:flex;gap:2rem;align-items:center;flex-wrap:wrap}
-
 .footer-links a{font-family:'Space Grotesk',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:rgba(13,15,26,0.45);text-decoration:none;transition:color 0.3s;cursor:none}
-
 .footer-links a:hover{color:var(--rose)}
-
 .footer-copy{font-family:'Space Grotesk',sans-serif;font-size:0.72rem;color:rgba(13,15,26,0.32);text-align:center;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--glass-border);max-width:1200px}
 
-
-
 /* ── PAGE DOTS ── */
-
 .page-tabs{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:400;display:flex;flex-direction:column;gap:0.6rem}
-
 .page-dot{width:6px;height:6px;border-radius:50%;background:rgba(13,15,26,0.2);cursor:none;transition:all 0.3s;border:none;padding:0}
-
 .page-dot.active,.page-dot:hover{background:var(--rose);transform:scale(1.5);box-shadow:0 0 8px rgba(196,120,138,0.5)}
 
-
-
 /* ── ANIMATIONS ── */
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-
 .reveal{opacity:0;transform:translateY(35px);transition:opacity 0.8s ease,transform 0.8s ease}
-
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-.reveal-left{opacity:0;transform:translateX(-35px);transition:opacity 0.8s ease,transform 0.8s ease}
-
-.reveal-left.visible{opacity:1;transform:translateX(0)}
-
-.reveal-right{opacity:0;transform:translateX(35px);transition:opacity 0.8s ease,transform 0.8s ease}
-
-.reveal-right.visible{opacity:1;transform:translateX(0)}
-
-
-
-/* ── PAGE TRANSITION WIPE ── */
-
-.page-wipe{
-
-  position:fixed;inset:0;z-index:2000;pointer-events:none;
-
-  display:flex;align-items:center;justify-content:center;
-
-}
-
-.wipe-panel{
-
-  position:absolute;inset:0;
-
-  background:linear-gradient(135deg,var(--rose),var(--violet));
-
-  transform:translateX(-100%);
-
-  transition:transform 0.5s cubic-bezier(0.76,0,0.24,1);
-
-}
-
-.page-wipe.entering .wipe-panel{transform:translateX(0)}
-
-.page-wipe.exiting .wipe-panel{transform:translateX(100%)}
-
-
-
-/* ── MODAL (blog post - full page feel) ── */
-
+/* ── MODAL ── */
 .modal-overlay{
-
   display:none;position:fixed;inset:0;z-index:600;
-
-  background:rgba(247,240,230,0.97);backdrop-filter:blur(4px);
-
+  background:rgba(247,240,230,0.97);backdrop-filter:blur(12px);
   overflow-y:auto;opacity:0;
-
   transition:opacity 0.4s ease;
-
 }
-
 .modal-overlay.open{display:block}
-
 .modal-overlay.visible{opacity:1}
-
 .modal-content{
-
   max-width:760px;margin:0 auto;
-
   padding:5rem 3.5rem 6rem;position:relative;
-
   transform:translateY(30px);transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
-
 }
-
 .modal-overlay.visible .modal-content{transform:translateY(0)}
-
 .modal-close{
-
   position:fixed;top:1.5rem;right:2rem;
-
   width:42px;height:42px;
-
   background:var(--rose);border:none;border-radius:50%;
-
   cursor:none;font-size:1rem;color:white;
-
   display:flex;align-items:center;justify-content:center;
-
   transition:all 0.3s;z-index:10;
-
   box-shadow:0 4px 16px rgba(196,120,138,0.35);
-
 }
-
 .modal-close:hover{transform:rotate(90deg) scale(1.1);background:var(--rose-dim)}
 
-
-
-/* reading progress inside post */
-
 #post-progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--rose),var(--gold),var(--violet));z-index:700;transition:width 0.1s linear}
-
-
-
 .post-cat-date{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
-
 .post-cat{font-family:'Space Grotesk',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);border:1px solid rgba(196,120,138,0.3);padding:0.2rem 0.7rem;border-radius:100px;background:rgba(196,120,138,0.06)}
-
 .post-date{font-family:'Space Grotesk',sans-serif;font-size:0.72rem;color:rgba(13,15,26,0.38)}
-
 .post-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.1;color:var(--ink);margin-bottom:1.5rem}
-
 .post-lead{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;line-height:1.75;color:rgba(13,15,26,0.55);border-left:3px solid var(--rose);padding-left:1.3rem;margin-bottom:2.5rem}
-
 .post-body{font-size:1rem;line-height:2;color:rgba(13,15,26,0.75)}
-
 .post-body p{margin-bottom:1.5rem}
-
 .post-body h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink);margin:2.5rem 0 1rem;background:linear-gradient(90deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
 .post-body strong{color:var(--ink)}
 
-.post-signature{margin-top:2.5rem;padding-top:1.8rem;border-top:1px solid var(--glass-border);font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--rose);text-align:right} 
+/* ── FIXED MISSING PROPERTY CLOSING FROM SNIPPET ── */
+.post-signature{
+  margin-top:2.5rem;padding-top:1.8rem;border-top:1px solid var(--glass-border);
+  font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;
+  color:var(--rose);text-align:right;
+}
 
+/* Responsive adjustments */
+@media(max-width:992px){
+  nav, nav.scrolled{padding:1rem 2rem}
+  .hero-content{grid-template-columns:1fr;gap:3rem;text-align:center;padding-top:8rem}
+  .hero-sub{margin:1.5rem auto 0}
+  .hero-cta{justify-content:center}
+  .about-inner{grid-template-columns:1fr;gap:3rem}
+  .blogs-grid{grid-template-columns:1fr}
+  .blog-card.featured{grid-column:1;grid-row:auto;min-height:auto}
+  .blog-card.small{grid-column:1}
+  .page-tabs{display:none}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .modal-content{padding:4rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursor-trail"></div>
+<div class="cursor-label" id="cursor-label">View Post</div>
+<div id="progress-bar"></div>
+<div class="ink-flood" id="ink-flood"></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Authentically Amna</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#blogs">Essays</a></li>
+    <li><a href="#archive">Archive</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme"></button></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle Mobile Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#blogs">Essays</a>
+  <a href="#archive">Archive</a>
+  <a href="#contact">Contact</a>
+  <div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.5rem;">
+    <span style="font-family:'Space Grotesk',sans-serif; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; opacity:0.6;">Switch Mode</span>
+    <button class="theme-toggle" id="mobile-theme-toggle"></button>
+  </div>
+</div>
+
+<div class="page-tabs">
+  <button class="page-dot active" data-sec="home" aria-label="Go to Home"></button>
+  <button class="page-dot" data-sec="about" aria-label="Go to About"></button>
+  <button class="page-dot" data-sec="blogs" aria-label="Go to Essays"></button>
+  <button class="page-dot" data-sec="archive" aria-label="Go to Archive"></button>
+  <button class="page-dot" data-sec="contact" aria-label="Go to Contact"></button>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-orb"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">Curated Reflections</div>
+      <h1 class="hero-title">
+        <span class="line1">Slowing down to</span>
+        <span class="line2" id="ink-title">capture depth.</span>
+      </h1>
+      <p class="hero-sub">Welcome to a corner of the internet built for lingering minds. Exploring the intersection of design, slow growth, human habits, and unfiltered life architecture.</p>
+      <div class="hero-cta">
+        <a href="#blogs" class="btn-glow"><span>Read Essays</span></a>
+        <a href="#about" class="btn-outline">About Amna</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-3d-card">
+        <div class="card-tag">Current Anchor</div>
+        <p class="card-quote">"In a culture built on constant optimization, standing completely still is a radical declaration of autonomy."</p>
+        <div class="card-author">— Note to Self, Vol. 14</div>
+        <div class="card-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Slow Living</span><span class="marquee-sep">•</span>
+    <span class="marquee-item">Authentic Creative Practices</span><span class="marquee-sep">•</span>
+    <span class="marquee-item">Digital Minimalism</span><span class="marquee-sep">•</span>
+    <span class="marquee-item">Design Reflections</span><span class="marquee-sep">•</span>
+    <span class="marquee-item">Slow Living</span><span class="marquee-sep">•</span>
+    <span class="marquee-item">Authentic Creative Practices</span><span class="marquee-sep">•</span>
+    <span class="marquee-item">Digital Minimalism</span><span class="marquee-sep">•</span>
+    <span class="marquee-item">Design Reflections</span><span class="marquee-sep">•</span>
+  </div>
+</div>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-3d-wrap">
+        <div class="about-card-face">
+          <div class="about-initial">A</div>
+          <div class="about-ring"></div>
+          <div class="about-glow-orb"></div>
+          <div class="about-glow-orb2"></div>
+          <h3 class="about-card-name">Amna</h3>
+          <p class="about-card-role">Essayist & Designer</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-details reveal">
+      <div class="eyebrow">The Mind Behind</div>
+      <h2 class="section-title">An architecture of <em>deliberate thoughts</em>.</h2>
+      <div class="typewriter-wrap">
+        <p class="about-bio" style="font-weight:500; color:var(--rose);"><span class="typewriter" id="typewriter-text"></span></p>
+      </div>
+      <p class="about-bio">I design experiences by day and catalog observations by night. This space functions as an ongoing, analog experimental diary mapping things worth holding onto in a landscape engineered for hyper-distraction.</p>
+      <div class="about-tags">
+        <span class="tag">Minimalism</span>
+        <span class="tag">Typography</span>
+        <span class="tag">Curated Spaces</span>
+        <span class="tag">Journaling</span>
+      </div>
+      <a href="https://instagram.com" target="_blank" rel="noopener" class="social-btn">
+        <svg class="insta-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        Follow Along
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider">
+  <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" style="fill: var(--deep); opacity:0.4;">
+    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C26.9,4.75,55.05,10.3,81.24,14.81,154.9,27.46,234.08,62.59,321.39,56.44z"></path>
+  </svg>
+</div>
+
+<section class="blogs-section" id="blogs">
+  <div class="blogs-inner">
+    <div class="blogs-header reveal">
+      <div>
+        <div class="eyebrow">Fresh Notebooks</div>
+        <h2 class="section-title">Core Catalog</h2>
+      </div>
+      <a href="#archive" class="view-all">Scroll Archive →</a>
+    </div>
+    
+    <div class="blogs-grid">
+      <article class="blog-card featured reveal, trigger-post" data-post-id="1">
+        <div class="card-cover cover-culture"></div>
+        <div class="blog-meta">
+          <span class="blog-cat">Culture Analysis</span>
+          <span class="blog-date">June 2026</span>
+          <span class="blog-num">01</span>
+        </div>
+        <h3 class="blog-title">The Exhausting Velocity of Modern Creative Aesthetics</h3>
+        <p class="blog-excerpt">An exploration of structural micro-trends, architectural homogeneity, and finding internal artistic anchors when creative algorithms change patterns weekly.</p>
+        <button class="read-btn">Enter Essay</button>
+      </article>
+
+      <article class="blog-card small reveal, trigger-post" data-post-id="2">
+        <div class="card-cover cover-welcome"></div>
+        <div class="blog-meta">
+          <span class="blog-cat">Personal Manifestos</span>
+          <span class="blog-date">May 2026</span>
+          <span class="blog-num">02</span>
+        </div>
+        <h3 class="blog-title">Architecting a Silent Digital Workstation</h3>
+        <p class="blog-excerpt">Practical blueprints for minimizing processing noise and building desktop spaces designed for deep creative focus over passive media absorption.</p>
+        <button class="read-btn">Enter Essay</button>
+      </article>
+
+      <article class="blog-card small reveal, trigger-post" data-post-id="3">
+        <div class="blog-meta">
+          <span class="blog-cat">Design Systems</span>
+          <span class="blog-date">April 2026</span>
+          <span class="blog-num">03</span>
+        </div>
+        <h3 class="blog-title">Tactile Ergonomics in a Flat Screen Era</h3>
+        <p class="blog-excerpt">Why physical, heavy paper objects, textured switches, and raw printed volumes continue to hold psychological dominance over smooth touch displays.</p>
+        <button class="read-btn">Enter Essay</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="archive-section" id="archive">
+  <div class="archive-label">
+    <span>Historical Vault</span>
+    <span class="drag-hint">[ Grab and Drag Track to Explore ]</span>
+  </div>
+  
+  <div class="h-scroll" id="h-scroll-container">
+    <div class="h-card trigger-post" data-post-id="4">
+      <div class="h-card-num">04</div>
+      <div class="h-card-cat">Habits</div>
+      <h3 class="h-card-title">Resting Without Productive Guilt</h3>
+      <p class="h-card-excerpt">Unlearning the psychological optimization trap where dynamic restorative states are treated as corporate utility items.</p>
+    </div>
+    <div class="h-card trigger-post" data-post-id="5">
+      <div class="h-card-num">05</div>
+      <div class="h-card-cat">Typography</div>
+      <h3 class="h-card-title">Emotional Weights of Serif Terminals</h3>
+      <p class="h-card-excerpt">How historical font metrics influence reader trust and shape contemporary editorial environments long before text content is parsed.</p>
+    </div>
+    <div class="h-card trigger-post" data-post-id="6">
+      <div class="h-card-num">06</div>
+      <div class="h-card-cat">Spaces</div>
+      <h3 class="h-card-title">The Subconscious Geometry of Workspace Corners</h3>
+      <p class="h-card-excerpt">Analyzing window proximities, soft angles, shadows, and natural wood parameters in shaping cognitive creative ease.</p>
+    </div>
+    <div class="h-card trigger-post" data-post-id="7">
+      <div class="h-card-num">07</div>
+      <div class="h-card-cat">Literary</div>
+      <h3 class="h-card-title">Marginalia: The Architecture of Memory</h3>
+      <p class="h-card-excerpt">Why leaving physical ink traces on books creates conversational layers that outlast the initial physical reader profile.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider flip">
+  <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" style="fill: var(--deep); opacity:0.4;">
+    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C26.9,4.75,55.05,10.3,81.24,14.81,154.9,27.46,234.08,62.59,321.39,56.44z"></path>
+  </svg>
+</div>
+
+<section class="contact-section" id="contact">
+  <div class="contact-orb"></div>
+  <div class="contact-inner reveal">
+    <div class="eyebrow">Open Inboxes</div>
+    <h2 class="section-title">Let's build a conversations matrix.</h2>
+    <p class="contact-desc">Whether you want to challenge an editorial point, offer an architectural review, or swap coffee brewing profiles, my channels are always open.</p>
+    <a href="mailto:hello@authenticallyamna.com" class="insta-btn">hello@authenticallyamna.com</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-main">
+    <div class="footer-logo">Authentically Amna</div>
+    <div class="footer-links">
+      <a href="#home">Top</a>
+      <a href="#about">About</a>
+      <a href="#blogs">Essays</a>
+      <a href="#archive">Archive</a>
+    </div>
+  </div>
+  <div class="footer-copy">
+    &copy; 2026 Authentically Amna. Created with intention.
+  </div>
+</footer>
+
+<div class="modal-overlay" id="article-modal">
+  <button class="modal-close" id="modal-close-btn" aria-label="Close Modal">✕</button>
+  <div id="post-progress"></div>
+  <div class="modal-content">
+    <div class="post-cat-date">
+      <span class="post-cat" id="m-cat">Category</span>
+      <span class="post-date" id="m-date">Date Mon, 2026</span>
+    </div>
+    <h2 class="post-title" id="m-title">Title Dynamic Layer</h2>
+    <div class="post-lead" id="m-lead">Lead summary description goes right inside this block quote interface style wrapper.</div>
+    <div class="post-body" id="m-body">
+      </div>
+    <div class="post-signature">Warmly,<br>Amna</div>
+  </div>
+</div>
+
+<script>
+// Mock Content Database Storage
+const articlesDatabase = {
+  "1": {
+    cat: "Culture Analysis", date: "June 2026",
+    title: "The Exhausting Velocity of Modern Creative Aesthetics",
+    lead: "An exploration of structural micro-trends, architectural homogeneity, and finding internal artistic anchors when creative algorithms change patterns weekly.",
+    body: `<h3>The Algorithmic Funnel</h3><p>Walk into a coffee shop in Seoul, London, or New York, and you will increasingly find the exact same interior profile: raw concrete counters, industrial brass fixtures, monochromatic menu typography, and single-origin botanical accents. The internet was supposed to decentralize human expression, yet it has funneled global visual cultures into uniform aesthetic pockets.</p><p>When platform interfaces reward hyper-specific compositions, creators unintentionally adapt output behaviors to match metric baselines. This creates design patterns built for consumption ease rather than emotional weight.</p><h3>The Strategy of Active Resistance</h3><p>Reclaiming creative autonomy requires decoupling curation from instant feedback loops. True style requires friction, manual collection architectures, and the willingness to let concepts develop behind closed doors over extended creative timelines.</p>`
+  },
+  "2": {
+    cat: "Personal Manifestos", date: "May 2026",
+    title: "Architecting a Silent Digital Workstation",
+    lead: "Practical blueprints for minimizing processing noise and building desktop spaces designed for deep creative focus over passive media absorption.",
+    body: `<h3>The Cost of Notification Dust</h3><p>Every small application badge, floating window indicator, and system alert extracts a tiny tax on cognitive clarity. Over hours, this creates background exhaustion that blunts creative analytical sharpness.</p><p>A minimal workstation isn't just an empty desk; it's a closed system where tools open strictly by manual request rather than autonomous system push protocols.</p><h3>Structural System Tweaks</h3><p>Start by converting communication channels to async batch modules. Eliminate the taskbar docks entirely. Let the screen be black until a clear output objective demands a complex program launch.</p>`
+  },
+  "3": {
+    cat: "Design Systems", date: "April 2026",
+    title: "Tactile Ergonomics in a Flat Screen Era",
+    lead: "Why physical, heavy paper objects, textured switches, and raw printed volumes continue to hold psychological dominance over smooth touch displays.",
+    body: `<h3>The Tactile Memory Anchor</h3><p>When everything is projected onto a frictionless sheet of glass, the brain drops its dimensional processing parameters. Studies indicate our spatial spatial map registers text locations and layout physical coordinates much more clearly on textured objects.</p><p>The texture of cotton paper fibers and the clean mechanical snap of physical toggle keys give direct neurological confirmation loops to creative gestures.</p><h3>Reintroducing Surface Resistance</h3><p>By blending industrial controls and high-weight paper records back into modern systems, we anchor virtual thoughts inside physical reality, generating deeper, less volatile thought connections.</p>`
+  },
+  "4": {
+    cat: "Habits", date: "March 2026",
+    title: "Resting Without Productive Guilt",
+    lead: "Unlearning the psychological optimization trap where dynamic restorative states are treated as corporate utility items.",
+    body: `<p>We have accidentally commodified stillness. True restorative states require no metrics, zero optimization checkouts, and complete freedom from standard progress indicators.</p>`
+  },
+  "5": {
+    cat: "Typography", date: "February 2026",
+    title: "Emotional Weights of Serif Terminals",
+    lead: "How historical font metrics influence reader trust and shape contemporary editorial environments long before text content is parsed.",
+    body: `<p>A serif profile brings systemic grounding. The subtle weight shifts in structural typographic stems cue organic spatial properties, echoing physical chiseled ink history.</p>`
+  },
+  "6": {
+    cat: "Spaces", date: "January 2026",
+    title: "The Subconscious Geometry of Workspace Corners",
+    lead: "Analyzing window proximities, soft angles, shadows, and natural wood parameters in shaping cognitive creative ease.",
+    body: `<p>Where light catches a structural partition line transforms room depth fields. Organizing desks facing soft angled corners broadens focal horizons, downshifting nervous system alertness triggers.</p>`
+  },
+  "7": {
+    cat: "Literary", date: "Dec 2025",
+    title: "Marginalia: The Architecture of Memory",
+    lead: "Why leaving physical ink traces on books creates conversational layers that outlast the initial physical reader profile.",
+    body: `<p>Writing in margins turns static paper volumes into living dynamic records, capturing exactly where our internal thoughts intersected with legacy external narratives.</p>`
+  }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  // --- 1. Ink Bleed Letter Parsing ---
+  const inkTitle = document.getElementById("ink-title");
+  if(inkTitle) {
+    const letters = inkTitle.textContent.split("");
+    inkTitle.innerHTML = "";
+    letters.forEach((char, idx) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.className = "ink-letter";
+      span.style.animationDelay = `${0.4 + (idx * 0.05)}s`;
+      if(char === " ") span.style.width = "0.25em";
+      inkTitle.appendChild(span);
+    });
+  }
+
+  // --- 2. Advanced Blended Dual Cursor Trail ---
+  const cursor = document.getElementById("cursor");
+  const trail = document.getElementById("cursor-trail");
+  const label = document.getElementById("cursor-label");
+
+  document.addEventListener("mousemove", (e) => {
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+    
+    // Smooth trail follow delay via animation properties
+    trail.style.left = `${e.clientX}px`;
+    trail.style.top = `${e.clientY}px`;
+    if(label.classList.contains("show")) {
+      label.style.left = `${e.clientX}px`;
+      label.style.top = `${e.clientY}px`;
+    }
+  });
+
+  // Cursor Hover Feedback States
+  const attachCursorHovers = () => {
+    document.querySelectorAll("a, button, .blog-card, .h-card, .theme-toggle, .page-dot").forEach(node => {
+      node.addEventListener("mouseenter", () => {
+        document.body.classList.add("hovering-card");
+        if(node.classList.contains("trigger-post") || node.closest(".blog-card")) {
+          label.classList.add("show");
+        }
+      });
+      node.addEventListener("mouseleave", () => {
+        document.body.classList.remove("hovering-card");
+        label.classList.remove("show");
+      });
+    });
+  };
+  attachCursorHovers();
+
+  // --- 3. Fluid Reading Progress Tracker ---
+  window.addEventListener("scroll", () => {
+    const bar = document.getElementById("progress-bar");
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if(totalHeight > 0) {
+      const percentage = (window.scrollY / totalHeight) * 100;
+      bar.style.width = `${percentage}%`;
+    }
+    
+    // Shrink navbar control
+    const nav = document.getElementById("navbar");
+    if(window.scrollY > 40) nav.classList.add("scrolled");
+    else nav.classList.remove("scrolled");
+    
+    // Active Dot Tracking Systems
+    const sections = ["home", "about", "blogs", "archive", "contact"];
+    let activeSec = "home";
+    sections.forEach(secId => {
+      const el = document.getElementById(secId);
+      if(el) {
+        const rect = el.getBoundingClientRect();
+        if(rect.top <= 160) activeSec = secId;
+      }
+    });
+    document.querySelectorAll(".page-dot").forEach(dot => {
+      dot.classList.toggle("active", dot.getAttribute("data-sec") === activeSec);
+    });
+  });
+
+  // Connect Dot Click Navigation
+  document.querySelectorAll(".page-dot").forEach(dot => {
+    dot.addEventListener("click", () => {
+      const target = document.getElementById(dot.getAttribute("data-sec"));
+      if(target) target.scrollIntoView({ behavior: "smooth" });
+    });
+  });
+
+  // --- 4. Interactive Typewriter Sequencer ---
+  const phrases = [
+    "Capturing clarity inside white space.",
+    "Designing experiences. Writing blueprints.",
+    "Decoupling imagination from digital feeds."
+  ];
+  let loopIdx = 0, charIdx = 0, isDeleting = false;
+  const typeTarget = document.getElementById("typewriter-text");
+  
+  const handleTypewriter = () => {
+    const current = phrases[loopIdx];
+    if(isDeleting) {
+      typeTarget.textContent = current.substring(0, charIdx - 1);
+      charIdx--;
+    } else {
+      typeTarget.textContent = current.substring(0, charIdx + 1);
+      charIdx++;
+    }
+
+    let speed = isDeleting ? 30 : 65;
+    if(!isDeleting && charIdx === current.length) {
+      speed = 2200; // Pause at end of text node
+      isDeleting = true;
+    } else if(isDeleting && charIdx === 0) {
+      isDeleting = false;
+      loopIdx = (loopIdx + 1) % phrases.length;
+      speed = 400; // Delay before typing new string
+    }
+    setTimeout(handleTypewriter, speed);
+  };
+  if(typeTarget) setTimeout(handleTypewriter, 1000);
+
+  // --- 5. Horizontal Grab-to-Scroll Mechanism ---
+  const scrollContainer = document.getElementById("h-scroll-container");
+  let isDown = false, startX, scrollLeftVal;
+
+  if(scrollContainer) {
+    scrollContainer.addEventListener("mousedown", (e) => {
+      isDown = true;
+      scrollContainer.style.cursor = "grabbing";
+      startX = e.pageX - scrollContainer.offsetLeft;
+      scrollLeftVal = scrollContainer.scrollLeft;
+    });
+    scrollContainer.addEventListener("mouseleave", () => {
+      isDown = false;
+      scrollContainer.style.cursor = "grab";
+    });
+    scrollContainer.addEventListener("mouseup", () => {
+      isDown = false;
+      scrollContainer.style.cursor = "grab";
+    });
+    scrollContainer.addEventListener("mousemove", (e) => {
+      if(!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - scrollContainer.offsetLeft;
+      const walk = (x - startX) * 1.8; // Control track tracking sensitivity
+      scrollContainer.scrollLeft = scrollLeftVal - walk;
+    });
+  }
+
+  // --- 6. Fluid Theme Switch Engine with Ink Flood Radial Transition ---
+  const toggleBtn = document.getElementById("theme-toggle");
+  const mobileToggleBtn = document.getElementById("mobile-theme-toggle");
+  const inkFlood = document.getElementById("ink-flood");
+
+  const executeThemeShift = () => {
+    const isDark = document.body.classList.contains("dark");
+    
+    // Position tracking origin coordinates of ink flood trigger node
+    const rect = toggleBtn.getBoundingClientRect();
+    inkFlood.style.top = `${rect.top + (rect.height / 2)}px`;
+    inkFlood.style.left = `${rect.left + (rect.width / 2)}px`;
+    
+    if(isDark) document.body.classList.add("dark-transition-flash");
+    else document.body.classList.remove("dark-transition-flash");
+
+    inkFlood.classList.add("flooding");
+
+    setTimeout(() => {
+      document.body.classList.toggle("dark");
+      inkFlood.classList.remove("flooding");
+    }, 450);
+  };
+
+  if(toggleBtn) toggleBtn.addEventListener("click", executeThemeShift);
+  if(mobileToggleBtn) mobileToggleBtn.addEventListener("click", executeThemeShift);
+
+  // --- 7. Modal Article Extraction Subsystem ---
+  const modal = document.getElementById("article-modal");
+  const modalClose = document.getElementById("modal-close-btn");
+  const modalProgress = document.getElementById("post-progress");
+
+  const openPostModal = (id) => {
+    const data = articlesDatabase[id];
+    if(!data) return;
+
+    // Payload Insertion Mechanics
+    document.getElementById("m-cat").textContent = data.cat;
+    document.getElementById("m-date").textContent = data.date;
+    document.getElementById("m-title").textContent = data.title;
+    document.getElementById("m-lead").textContent = data.lead;
+    document.getElementById("m-body").innerHTML = data.body;
+
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden"; // Freeze scroll layers underneath
+    modalProgress.style.width = "0%";
+    
+    setTimeout(() => {
+      modal.classList.add("visible");
+      attachCursorHovers(); // Reinject custom cursor trackers inside target modal viewport
+    }, 50);
+  };
+
+  const closePostModal = () => {
+    modal.classList.remove("visible");
+    document.body.style.overflow = "";
+    setTimeout(() => {
+      modal.classList.remove("open");
+    }, 400);
+  };
+
+  // Attach dynamic activation handles to structural selector classes
+  document.querySelectorAll(".trigger-post, .blog-card, .h-card").forEach(node => {
+    node.addEventListener("click", (e) => {
+      // Prevent internal button interactions firing collision paths
+      if(e.target.tagName === "A") return;
+      const id = node.getAttribute("data-post-id");
+      if(id) openPostModal(id);
+    });
+  });
+
+  if(modalClose) modalClose.addEventListener("click", closePostModal);
+  
+  // Track specific inner modal scrolling progression metrics
+  modal.addEventListener("scroll", () => {
+    const total = modal.scrollHeight - modal.clientHeight;
+    if(total > 0) {
+      const pct = (modal.scrollTop / total) * 100;
+      modalProgress.style.width = `${pct}%`;
+    }
+  });
+
+  // --- 8. Responsive Mobile Hamburger Mechanics ---
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if(hamburger && mobileMenu) {
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("open");
+      mobileMenu.classList.toggle("open");
+    });
+    
+    // Close mobile panels when navigation anchors fire links
+    mobileMenu.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("open");
+        mobileMenu.classList.remove("open");
+      });
+    });
+  }
+
+  // --- 9. Scroll Intersection Observer (Reveal Engine) ---
+  const revealCallback = (entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target); // Trigger once per spatial run loop
+      }
+    });
+  };
+  const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.08 });
+  document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+});
+</script>
+</body>
+</html>

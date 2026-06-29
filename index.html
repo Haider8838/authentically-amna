@@ -1241,6 +1241,7 @@ window.addEventListener('scroll',()=>{
 ══════════════════════════════ */
 document.querySelectorAll('.blog-card').forEach(card=>{
   card.addEventListener('mousemove',e=>{
+    if(isDragging)return;
     const r=card.getBoundingClientRect();
     const x=(e.clientX-r.left)/r.width-0.5;
     const y=(e.clientY-r.top)/r.height-0.5;
@@ -1253,11 +1254,24 @@ document.querySelectorAll('.blog-card').forEach(card=>{
    HORIZONTAL DRAG SCROLL
 ══════════════════════════════ */
 const track=document.getElementById('hScroll');
-let isDown=false,startX,scrollLeft;
-track.addEventListener('mousedown',e=>{isDown=true;track.classList.add('dragging');startX=e.pageX-track.offsetLeft;scrollLeft=track.scrollLeft});
-track.addEventListener('mouseleave',()=>{isDown=false;track.classList.remove('dragging')});
-track.addEventListener('mouseup',()=>{isDown=false;track.classList.remove('dragging')});
-track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-track.offsetLeft;const walk=(x-startX)*1.5;track.scrollLeft=scrollLeft-walk});
+let isDown=false,isDragging=false,startX,scrollLeft,dragDist=0;
+track.addEventListener('mousedown',e=>{
+  isDown=true;isDragging=false;dragDist=0;
+  track.classList.add('dragging');
+  startX=e.pageX-track.offsetLeft;
+  scrollLeft=track.scrollLeft;
+});
+track.addEventListener('mouseleave',()=>{isDown=false;isDragging=false;track.classList.remove('dragging')});
+track.addEventListener('mouseup',()=>{isDown=false;isDragging=false;track.classList.remove('dragging')});
+track.addEventListener('mousemove',e=>{
+  if(!isDown)return;
+  e.preventDefault();
+  const x=e.pageX-track.offsetLeft;
+  const walk=(x-startX)*1.5;
+  dragDist=Math.abs(x-startX);
+  if(dragDist>5)isDragging=true;
+  track.scrollLeft=scrollLeft-walk;
+});
 
 /* ══════════════════════════════
    WIPE TRANSITION
@@ -1323,7 +1337,10 @@ document.getElementById('postModal').addEventListener('scroll',function(){
 
 /* blog card click */
 document.querySelectorAll('.blog-card').forEach(card=>{
-  card.addEventListener('click',()=>openPost(card.dataset.post));
+  card.addEventListener('click',e=>{
+    if(isDragging||dragDist>5)return;
+    openPost(card.dataset.post);
+  });
 });
 
 /* ══════════════════════════════

@@ -277,12 +277,25 @@
     color: var(--mauve-light); line-height: 1;
     pointer-events: none;
   }
-  .hero-quote { position: relative; z-index: 1; animation: fadeUp 1s ease 1s both; }
+  .hero-quote { position: relative; z-index: 1; animation: fadeUp 1s ease 1s both, float3d 7s ease-in-out infinite 1.8s; }
+  .hero-quote-card {
+    background: var(--card-bg);
+    padding: 2.2rem 2.4rem;
+    border-radius: 16px;
+    transform: perspective(800px) rotateY(-6deg) rotateX(3deg);
+    box-shadow: 18px 18px 0 var(--mauve-light), 0 30px 60px rgba(13,15,26,0.18);
+    transition: background 0.4s ease, transform 0.3s ease;
+  }
+  .hero-quote-card:hover { transform: perspective(800px) rotateY(-2deg) rotateX(1deg) scale(1.02); }
+  @keyframes float3d {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
   .hero-quote blockquote {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.2rem, 1.8vw, 1.55rem);
     font-style: italic; font-weight: 400; line-height: 1.65;
-    color: var(--text-main); max-width: 420px;
+    color: var(--card-text); max-width: 420px;
   }
   .hero-quote cite {
     display: block; margin-top: 1.2rem;
@@ -345,6 +358,13 @@
     position: relative; overflow: hidden;
     box-shadow: 18px 18px 0 var(--mauve-light);
     flex-shrink: 0;
+    transform: perspective(1000px) rotateY(-10deg) rotateX(3deg);
+    animation: aboutFloat 8s ease-in-out infinite;
+    transition: background 0.4s ease;
+  }
+  @keyframes aboutFloat {
+    0%, 100% { transform: perspective(1000px) rotateY(-10deg) rotateX(3deg) translateY(0); }
+    50% { transform: perspective(1000px) rotateY(-6deg) rotateX(1deg) translateY(-14px); }
   }
   .about-card::before {
     content: 'A';
@@ -450,8 +470,13 @@
   }
   .blog-card {
     background: var(--card-bg); cursor: pointer; position: relative; overflow: hidden;
-    transition: background 0.4s ease;
+    transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
     display: flex; flex-direction: column;
+    transform-style: preserve-3d;
+  }
+  .blog-card:hover {
+    box-shadow: 0 25px 50px rgba(13,15,26,0.25);
+    z-index: 2;
   }
   .blog-card.featured { grid-column: 1; grid-row: 1 / 3; }
   .blog-card.small { grid-column: 2; }
@@ -665,6 +690,10 @@
 
     .hero-right { padding: 3rem 1.5rem 3.5rem; min-height: auto; }
     .hero-right::before { font-size: 7rem; top: 1rem; left: 1rem; }
+    .hero-quote { animation: fadeUp 1s ease 1s both; }
+    .hero-quote-card { transform: none; box-shadow: 10px 10px 0 var(--mauve-light); }
+    .about-card { animation: none; transform: none; }
+    .blog-card:hover { transform: none !important; }
     .hero-quote blockquote { font-size: 1.15rem; max-width: 100%; }
     .hero-stats { gap: 1.5rem; }
     .stat-num { font-size: 1.7rem; }
@@ -750,8 +779,10 @@
   <div class="hero-divider"></div>
   <div class="hero-right">
     <div class="hero-quote">
-      <blockquote>"Making a way out of the crowd doesn't mean you hate everyone in it — it simply means you were suffocated."</blockquote>
-      <cite>— Amna, The Cultural Bug</cite>
+      <div class="hero-quote-card">
+        <blockquote>"Making a way out of the crowd doesn't mean you hate everyone in it — it simply means you were suffocated."</blockquote>
+        <cite>— Amna, The Cultural Bug</cite>
+      </div>
     </div>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num">3</span><span class="stat-label">Posts Published</span></div>
@@ -1045,8 +1076,18 @@ function closePrivacyOutside(e) {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closePrivacy(); } });
 
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 document.querySelectorAll('.blog-card').forEach(card => {
   card.addEventListener('click', () => openPost(card.dataset.post));
+  if (!isTouchDevice) {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(800px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  }
 });
 
 const hamburger = document.getElementById('hamburger');
